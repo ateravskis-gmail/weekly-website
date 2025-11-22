@@ -32,9 +32,9 @@
       <div class="container">
         <div class="hero-text">
           <p class="eyebrow">Stormwater compliance, simplified</p>
-          <h1>The inspection app that works the way you do.</h1>
-          <p class="subtitle">Weekly is stormwater inspection platform using our <strong>patent-pending "photo-first flow" technology</strong>, allowing storm water inspectors
-            to perform inspections faster and more accurately than ever before.</p>
+          <h1>The stormwater inspection app that works the way you do.</h1>
+          <p class="subtitle">Weekly was created by Andrew Teravskis to solve a frustration he and many others have had with inspection reports. Weekly turns the inspection flow on its head, 
+            allowing inspectors to start reports with pictures first, with our <strong>patent-pending "photo-first flow" method</strong>.</p>
           <div class="hero-actions">
             <a class="primary" href="https://app.getweekly.io">Get Started for Free</a>
             <a class="secondary" href="#features">See How It Works</a>
@@ -55,14 +55,14 @@
           </div>
         </div>
         <div class="hero-card">
-          <img src="WeeklyDashboard.png" alt="Inspection dashboard" />
-          <div class="card-overlay">
-            <h3>Weekly Dashboard</h3>
-            <ul>
-              <li>Access from any device</li>
-              <li>Quickly see inspection history and QPE events</li>
-              <li>Easily create new projects and inspections</li>
-            </ul>
+          <div class="video-thumbnail-wrapper">
+            <img src="Thumbnail.png" alt="Video thumbnail" class="video-thumbnail" id="videoThumbnail" />
+            <div class="play-button-overlay">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="rgba(255, 255, 255, 0.9)"/>
+                <path d="M10 8L16 12L10 16V8Z" fill="var(--droplet-blue)"/>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -355,6 +355,27 @@
     </div>
   </div>
 
+  <!-- Video Modal -->
+  <div id="videoModal" class="modal video-modal" role="dialog" aria-modal="true">
+    <div class="modal-overlay video-modal-overlay"></div>
+    <div class="modal-content video-modal-content">
+      <button class="video-modal-close" aria-label="Close video">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="video-wrapper">
+        <iframe 
+          src="https://player.vimeo.com/video/1139658967?h=0dfd74a151" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture" 
+          allowfullscreen
+          class="vimeo-iframe">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Terms of Service Modal -->
   <div id="termsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
     <div class="modal-overlay"></div>
@@ -541,7 +562,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>© <span id="year"></span> All rights reserved.</p>
+      <p>© <span id="year"></span> All rights reserved. Patent pending.</p>
       <div class="footer-links">
         <a href="#" id="privacyLink">Privacy</a>
         <a href="#" id="termsLink">Terms</a>
@@ -613,6 +634,26 @@
       });
     });
 
+    // Video modal functionality
+    const videoModal = document.getElementById('videoModal');
+    const videoThumbnailWrapper = document.querySelector('.video-thumbnail-wrapper');
+    const videoModalCloses = videoModal.querySelectorAll('.video-modal-close, .video-modal-overlay');
+    const vimeoIframe = videoModal.querySelector('.vimeo-iframe');
+
+    videoThumbnailWrapper.addEventListener('click', () => {
+      openModal(videoModal);
+    });
+
+    videoModalCloses.forEach(closeBtn => {
+      closeBtn.addEventListener('click', () => {
+        closeModal(videoModal);
+        // Pause video when modal closes
+        if (vimeoIframe) {
+          vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+        }
+      });
+    });
+
     // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
@@ -621,6 +662,13 @@
         }
         if (termsModal.style.display === 'flex') {
           closeModal(termsModal);
+        }
+        if (videoModal.style.display === 'flex') {
+          closeModal(videoModal);
+          // Pause video when modal closes
+          if (vimeoIframe) {
+            vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+          }
         }
       }
     });
