@@ -204,15 +204,16 @@ img {
 
 .video-thumbnail-wrapper {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
+  cursor: pointer;
 }
 
 .video-thumbnail {
-  cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
   width: 100%;
   display: block;
+  pointer-events: none;
 }
 
 .video-thumbnail-wrapper:hover .video-thumbnail {
@@ -227,6 +228,7 @@ img {
   transform: translate(-50%, -50%);
   pointer-events: none;
   transition: transform 0.3s, opacity 0.3s;
+  z-index: 10;
 }
 
 .video-thumbnail-wrapper:hover .play-button-overlay {
