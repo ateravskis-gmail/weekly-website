@@ -571,105 +571,125 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Pricing toggle functionality
-    const pricingToggle = document.getElementById('pricingToggle');
-    const toggleOptions = document.querySelectorAll('.toggle-option');
-    const pricingAmounts = document.querySelectorAll('.pricing-amount');
-    
-    pricingToggle.addEventListener('click', (e) => {
-      const clickedOption = e.target.closest('.toggle-option');
-      if (!clickedOption) return;
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set year
+      const yearElement = document.getElementById('year');
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
       
-      const period = clickedOption.dataset.period;
-      
-      // Update toggle active state
-      toggleOptions.forEach(opt => opt.classList.toggle('active', opt === clickedOption));
-      pricingToggle.dataset.period = period;
-      
-      // Update pricing displays
-      pricingAmounts.forEach(amount => {
-        if (amount.dataset.period === period) {
-          amount.style.display = 'block';
-        } else {
-          amount.style.display = 'none';
-        }
-      });
-    });
+      // Pricing toggle functionality
+      const pricingToggle = document.getElementById('pricingToggle');
+      if (pricingToggle) {
+        const toggleOptions = document.querySelectorAll('.toggle-option');
+        const pricingAmounts = document.querySelectorAll('.pricing-amount');
+        
+        pricingToggle.addEventListener('click', (e) => {
+          const clickedOption = e.target.closest('.toggle-option');
+          if (!clickedOption) return;
+          
+          const period = clickedOption.dataset.period;
+          
+          // Update toggle active state
+          toggleOptions.forEach(opt => opt.classList.toggle('active', opt === clickedOption));
+          pricingToggle.dataset.period = period;
+          
+          // Update pricing displays
+          pricingAmounts.forEach(amount => {
+            if (amount.dataset.period === period) {
+              amount.style.display = 'block';
+            } else {
+              amount.style.display = 'none';
+            }
+          });
+        });
+      }
 
-    // Modal functionality
-    const privacyModal = document.getElementById('privacyModal');
-    const termsModal = document.getElementById('termsModal');
-    const privacyLink = document.getElementById('privacyLink');
-    const termsLink = document.getElementById('termsLink');
-    const modalCloses = document.querySelectorAll('.modal-close, .modal-close-btn, .modal-overlay');
+      // Modal functionality
+      const privacyModal = document.getElementById('privacyModal');
+      const termsModal = document.getElementById('termsModal');
+      const privacyLink = document.getElementById('privacyLink');
+      const termsLink = document.getElementById('termsLink');
+      const modalCloses = document.querySelectorAll('.modal-close, .modal-close-btn, .modal-overlay');
 
-    function openModal(modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    privacyLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      openModal(privacyModal);
-    });
-
-    termsLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      openModal(termsModal);
-    });
-
-    modalCloses.forEach(closeBtn => {
-      closeBtn.addEventListener('click', (e) => {
-        const modal = e.target.closest('.modal');
+      function openModal(modal) {
         if (modal) {
-          closeModal(modal);
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
         }
-      });
-    });
+      }
 
-    // Video modal functionality
-    const videoModal = document.getElementById('videoModal');
-    const videoThumbnailWrapper = document.querySelector('.video-thumbnail-wrapper');
-    const videoModalCloses = videoModal.querySelectorAll('.video-modal-close, .video-modal-overlay');
-    const vimeoIframe = videoModal.querySelector('.vimeo-iframe');
-
-    videoThumbnailWrapper.addEventListener('click', () => {
-      openModal(videoModal);
-    });
-
-    videoModalCloses.forEach(closeBtn => {
-      closeBtn.addEventListener('click', () => {
-        closeModal(videoModal);
-        // Pause video when modal closes
-        if (vimeoIframe) {
-          vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+      function closeModal(modal) {
+        if (modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
         }
-      });
-    });
+      }
 
-    // Close modal on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (privacyModal.style.display === 'flex') {
-          closeModal(privacyModal);
-        }
-        if (termsModal.style.display === 'flex') {
-          closeModal(termsModal);
-        }
-        if (videoModal.style.display === 'flex') {
-          closeModal(videoModal);
-          // Pause video when modal closes
-          if (vimeoIframe) {
-            vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+      if (privacyLink && privacyModal) {
+        privacyLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal(privacyModal);
+        });
+      }
+
+      if (termsLink && termsModal) {
+        termsLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal(termsModal);
+        });
+      }
+
+      modalCloses.forEach(closeBtn => {
+        closeBtn.addEventListener('click', (e) => {
+          const modal = e.target.closest('.modal');
+          if (modal) {
+            closeModal(modal);
           }
-        }
+        });
+      });
+
+      // Video modal functionality
+      const videoModal = document.getElementById('videoModal');
+      const videoThumbnailWrapper = document.querySelector('.video-thumbnail-wrapper');
+      
+      if (videoModal && videoThumbnailWrapper) {
+        const videoModalCloses = videoModal.querySelectorAll('.video-modal-close, .video-modal-overlay');
+        const vimeoIframe = videoModal.querySelector('.vimeo-iframe');
+
+        videoThumbnailWrapper.addEventListener('click', () => {
+          openModal(videoModal);
+        });
+
+        videoModalCloses.forEach(closeBtn => {
+          closeBtn.addEventListener('click', () => {
+            closeModal(videoModal);
+            // Pause video when modal closes
+            if (vimeoIframe) {
+              vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+            }
+          });
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            if (privacyModal && privacyModal.style.display === 'flex') {
+              closeModal(privacyModal);
+            }
+            if (termsModal && termsModal.style.display === 'flex') {
+              closeModal(termsModal);
+            }
+            if (videoModal && videoModal.style.display === 'flex') {
+              closeModal(videoModal);
+              // Pause video when modal closes
+              if (vimeoIframe) {
+                vimeoIframe.src = vimeoIframe.src; // Reset iframe to stop video
+              }
+            }
+          }
+        });
       }
     });
   </script>
