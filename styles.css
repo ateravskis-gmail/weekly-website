@@ -674,6 +674,7 @@ img {
   margin-bottom: 1.25rem;
 }
 
+.legal-content h2,
 .legal-content h3 {
   font-size: 1.4rem;
   font-weight: 600;
@@ -715,6 +716,64 @@ img {
   color: var(--storm-gray);
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.legal-page {
+  padding: 5rem 0 4rem;
+}
+
+.legal-page h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: 0.5rem;
+  color: var(--storm-gray);
+}
+
+.legal-page .legal-updated {
+  margin-bottom: 2rem;
+}
+
+.faq {
+  padding: 5rem 0;
+  background: var(--mist-white);
+}
+
+.faq h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 2rem;
+}
+
+.faq-list {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 720px;
+}
+
+.faq-list details {
+  background: var(--light-gray);
+  border: 1px solid rgba(61, 67, 73, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+}
+
+.faq-list summary {
+  font-weight: 600;
+  color: var(--storm-gray);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list details[open] summary {
+  margin-bottom: 0.75rem;
+  color: var(--droplet-blue);
+}
+
+.faq-list details p {
+  color: rgba(61, 67, 73, 0.75);
+  line-height: 1.6;
 }
 
 /* Video Modal Styles */
