@@ -212,6 +212,7 @@ img {
 .video-thumbnail {
   transition: transform 0.3s, box-shadow 0.3s;
   width: 100%;
+  height: auto;
   display: block;
   pointer-events: none;
 }
