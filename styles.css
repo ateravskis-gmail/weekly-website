@@ -264,12 +264,65 @@ img {
   font-size: 0.9rem;
 }
 
+.cta-banner .container,
+.features-new-card {
+  background: linear-gradient(120deg, rgba(30, 155, 255, 0.1), rgba(77, 108, 140, 0.08));
+  border: 1px solid rgba(77, 108, 140, 0.15);
+  border-radius: 28px;
+  padding: 2.5rem;
+}
+
+.cta-banner .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.features-new-card {
+  margin-top: 2.5rem;
+}
+
+.features-new-card h2 {
+  margin-bottom: 1.5rem;
+}
+
+.features-new-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem 2rem;
+}
+
+.features-new-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.features-new-list strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--storm-gray);
+}
+
+.features-new-list p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(61, 67, 73, 0.75);
+}
+
 .features {
   padding: 5rem 0;
   background: var(--light-gray);
 }
 
 .features h2,
+.features-new-card h2,
 .insights h2,
 .workflow h2,
 .cta-banner h2 {
@@ -519,18 +572,6 @@ img {
 
 .cta-banner {
   padding: 4rem 0;
-}
-
-.cta-banner .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  background: linear-gradient(120deg, rgba(30, 155, 255, 0.1), rgba(77, 108, 140, 0.08));
-  border: 1px solid rgba(77, 108, 140, 0.15);
-  border-radius: 28px;
-  padding: 2.5rem;
 }
 
 .cta-actions {
