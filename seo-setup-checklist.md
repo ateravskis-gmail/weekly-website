@@ -20,30 +20,23 @@ Complete these after deploying the site to https://getweekly.io.
 2. Import site from Google Search Console, or add `https://getweekly.io` and verify (DNS or HTML).
 3. Submit `https://getweekly.io/sitemap.xml`
 
-## Analytics (choose one)
+## Analytics (Google Analytics 4)
 
-### Google Analytics 4
+GA4 is wired via [`analytics.js`](analytics.js) on all public pages.
 
-1. Create a GA4 property at [analytics.google.com](https://analytics.google.com).
-2. Copy the Measurement ID (format `G-XXXXXXXXXX`).
-3. Add before `</head>` in `index.html`, `privacy.html`, and `terms.html`:
+1. Create a GA4 property at [analytics.google.com](https://analytics.google.com) (if you have not already).
+2. Add a **Web** data stream for `https://getweekly.io`.
+3. Copy the **Measurement ID** (format `G-XXXXXXXXXX`).
+4. Open [`analytics.js`](analytics.js) and replace `G-XXXXXXXXXX` with your ID.
+5. Deploy, then visit the site and check **Reports → Realtime** in GA4.
 
-```html
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-```
-
-4. Update the Privacy Policy (Section 1.2 / service providers) to mention Google Analytics if enabled.
+Tracked automatically:
+- Page views on `index.html`, `privacy.html`, and `terms.html`
+- `sign_up` events when visitors click Login / Signup or Get Started links (via `data-ga-event`)
 
 ### Plausible (privacy-friendly alternative)
 
-1. Sign up at [plausible.io](https://plausible.io) and add `getweekly.io`.
-2. Add the script snippet Plausible provides to the same three HTML files.
+If you prefer Plausible instead of GA4, remove the `analytics.js` script tags from the HTML files and follow Plausible's embed instructions instead.
 
 ## Post-deploy validation
 
