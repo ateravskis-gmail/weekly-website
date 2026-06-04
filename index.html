@@ -250,30 +250,59 @@
             <p>Generate SWPPP Inspection Log Excel files from Project Settings by compliance year or custom range. You can also print a SWPPP Inspection Reports QR code to make accessing completed inspection reports easier.</p>
           </article>
         </div>
-        <div class="features-new-card" aria-labelledby="new-features-heading">
+        <div class="features-new-card" id="featuresNewTabs" aria-labelledby="new-features-heading">
           <h2 id="new-features-heading">New Features</h2>
-          <ul class="features-new-list">
-            <li>
-              <strong>QPE forecasts &amp; alerts</strong>
-              <p>Multi-day NOAA forecast grid with QPE labeling, plus email alerts when qualifying forecast precipitation is detected.</p>
-            </li>
-            <li>
-              <strong>Rain alerts</strong>
-              <p>Get an alert email when precipitation is reported at nearby NOAA weather stations.</p>
-            </li>
-            <li>
-              <strong>Inspection log exports</strong>
-              <p>Generate an Excel inspection log for all inspections completed during a specific date range.</p>
-            </li>
-            <li>
-              <strong>Invoicing</strong>
-              <p>Easily attach invoice PDFs to report emails and manage sent invoices from the project page.</p>
-            </li>
-            <li>
-              <strong>QR report sharing</strong>
-              <p>Print a jobsite QR code that opens a public page for accessing completed inspection reports.</p>
-            </li>
-          </ul>
+          <div class="features-new-tablist" role="tablist" aria-label="New features">
+            <button type="button" class="features-new-tab is-active" role="tab" id="new-tab-rain" aria-selected="true" aria-controls="new-panel-rain" data-tab="rain" data-image="images/PrecipAlerts.png" data-alt="Rain alert emails from NOAA weather stations in Weekly">
+              Rain alerts
+            </button>
+            <button type="button" class="features-new-tab" role="tab" id="new-tab-equipment" aria-selected="false" aria-controls="new-panel-equipment" tabindex="-1" data-tab="equipment" data-image="images/SamplingEquipment.png" data-alt="Field sampling equipment management with QR codes and calibration logs in Weekly">
+              Sampling equipment
+            </button>
+            <button type="button" class="features-new-tab" role="tab" id="new-tab-qpe" aria-selected="false" aria-controls="new-panel-qpe" tabindex="-1" data-tab="qpe" data-image="images/QPE Alerts.png" data-alt="QPE forecasts and alert emails in Weekly">
+              QPE forecasts &amp; alerts
+            </button>
+            <button type="button" class="features-new-tab" role="tab" id="new-tab-logs" aria-selected="false" aria-controls="new-panel-logs" tabindex="-1" data-tab="logs" data-image="images/InspectionLog.png" data-alt="SWPPP inspection log Excel export in Weekly">
+              Inspection log exports
+            </button>
+            <button type="button" class="features-new-tab" role="tab" id="new-tab-invoice" aria-selected="false" aria-controls="new-panel-invoice" tabindex="-1" data-tab="invoice" data-image="images/Invoice.png" data-alt="Invoicing with inspection reports in Weekly">
+              Invoicing
+            </button>
+            <button type="button" class="features-new-tab" role="tab" id="new-tab-qr" aria-selected="false" aria-controls="new-panel-qr" tabindex="-1" data-tab="qr" data-image="images/QR Code.png" data-alt="SWPPP inspection report QR code sharing in Weekly">
+              QR report sharing
+            </button>
+          </div>
+          <div class="features-new-body">
+            <div class="features-new-image-wrap">
+              <img class="features-new-image" id="featuresNewImage" src="images/PrecipAlerts.png" alt="Rain alert emails from NOAA weather stations in Weekly" width="640" height="480" loading="eager" />
+            </div>
+            <div class="features-new-panels">
+              <div class="features-new-panel is-active is-visible" role="tabpanel" id="new-panel-rain" aria-labelledby="new-tab-rain">
+                <h3>Rain alerts</h3>
+                <p>Get an alert email when precipitation is reported at nearby NOAA weather stations.</p>
+              </div>
+              <div class="features-new-panel" role="tabpanel" id="new-panel-equipment" aria-labelledby="new-tab-equipment">
+                <h3>Sampling equipment</h3>
+                <p>Manage all of your field sampling equipment. Print a QR code for each instrument, scan it with your phone while collecting samples, and the latest calibration log will appear on the inspection report.</p>
+              </div>
+              <div class="features-new-panel" role="tabpanel" id="new-panel-qpe" aria-labelledby="new-tab-qpe">
+                <h3>QPE forecasts &amp; alerts</h3>
+                <p>Multi-day NOAA forecast grid with QPE labeling, plus email alerts when qualifying forecast precipitation is detected.</p>
+              </div>
+              <div class="features-new-panel" role="tabpanel" id="new-panel-logs" aria-labelledby="new-tab-logs">
+                <h3>Inspection log exports</h3>
+                <p>Generate an Excel inspection log for all inspections completed during a specific date range.</p>
+              </div>
+              <div class="features-new-panel" role="tabpanel" id="new-panel-invoice" aria-labelledby="new-tab-invoice">
+                <h3>Invoicing</h3>
+                <p>Easily attach invoice PDFs to report emails and manage sent invoices from the project page.</p>
+              </div>
+              <div class="features-new-panel" role="tabpanel" id="new-panel-qr" aria-labelledby="new-tab-qr">
+                <h3>QR report sharing</h3>
+                <p>Print a jobsite QR code that opens a public page for accessing completed inspection reports.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -481,6 +510,94 @@
           pricingAmounts.forEach(amount => {
             amount.style.display = amount.dataset.period === period ? 'block' : 'none';
           });
+        });
+      }
+
+      const featuresNewTabs = document.getElementById('featuresNewTabs');
+      if (featuresNewTabs) {
+        const tablist = featuresNewTabs.querySelector('.features-new-tablist');
+        const tabButtons = featuresNewTabs.querySelectorAll('.features-new-tab');
+        const panels = featuresNewTabs.querySelectorAll('.features-new-panel');
+        const featureImage = document.getElementById('featuresNewImage');
+        const imageWrap = featuresNewTabs.querySelector('.features-new-image-wrap');
+        let selectedTab = featuresNewTabs.querySelector('.features-new-tab.is-active') || tabButtons[0];
+        let fadeTimer = null;
+        const canHover = window.matchMedia('(hover: hover)').matches;
+
+        function showTab(tab, { pin = false } = {}) {
+          if (pin) {
+            selectedTab = tab;
+          }
+          displayedTab = tab;
+          const panelId = tab.getAttribute('aria-controls');
+          const imageSrc = tab.dataset.image;
+          const imageAlt = tab.dataset.alt;
+
+          tabButtons.forEach(btn => {
+            const isSelected = btn === selectedTab;
+            const isPreview = btn === tab && tab !== selectedTab;
+            btn.classList.toggle('is-active', isSelected);
+            btn.classList.toggle('is-preview', isPreview);
+            btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            btn.tabIndex = isSelected ? 0 : -1;
+          });
+
+          panels.forEach(panel => {
+            const isVisible = panel.id === panelId;
+            panel.classList.toggle('is-visible', isVisible);
+            panel.classList.toggle('is-active', panel.id === selectedTab.getAttribute('aria-controls'));
+          });
+
+          if (featureImage && imageSrc && featureImage.getAttribute('src') !== imageSrc) {
+            if (fadeTimer) window.clearTimeout(fadeTimer);
+            featureImage.classList.add('is-fading');
+            imageWrap.classList.add('is-transitioning');
+            fadeTimer = window.setTimeout(() => {
+              featureImage.src = imageSrc;
+              featureImage.alt = imageAlt || '';
+              featureImage.classList.remove('is-fading');
+              imageWrap.classList.remove('is-transitioning');
+            }, 200);
+          }
+        }
+
+        tabButtons.forEach(tab => {
+          if (canHover) {
+            tab.addEventListener('mouseenter', () => showTab(tab));
+          }
+          tab.addEventListener('focus', () => showTab(tab));
+          tab.addEventListener('click', () => showTab(tab, { pin: true }));
+          tab.addEventListener('keydown', (e) => {
+            const tabs = Array.from(tabButtons);
+            const index = tabs.indexOf(tab);
+            let nextIndex = null;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+              nextIndex = (index + 1) % tabs.length;
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+              nextIndex = (index - 1 + tabs.length) % tabs.length;
+            } else if (e.key === 'Home') {
+              nextIndex = 0;
+            } else if (e.key === 'End') {
+              nextIndex = tabs.length - 1;
+            } else if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              showTab(tab, { pin: true });
+              return;
+            }
+
+            if (nextIndex !== null) {
+              e.preventDefault();
+              tabs[nextIndex].focus();
+              showTab(tabs[nextIndex]);
+            }
+          });
+        });
+
+        featuresNewTabs.addEventListener('mouseleave', (e) => {
+          if (!featuresNewTabs.contains(e.relatedTarget)) {
+            showTab(selectedTab);
+          }
         });
       }
 
